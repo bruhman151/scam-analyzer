@@ -1,121 +1,57 @@
 <!doctype html>
 <html lang="th">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Scam Risk Analyzer — ทดสอบข้อความ</title>
-  <style>
-    :root { font-family: system-ui, "Segoe UI", sans-serif; color: #18212f; background: #f5f7fa; }
-    * { box-sizing: border-box; }
-    body { margin: 0; padding: 32px 16px; }
-    main { max-width: 760px; margin: 0 auto; }
-    h1 { margin: 0 0 8px; font-size: 2rem; }
-    h2 { margin: 24px 0 8px; font-size: 1.2rem; }
-    p { line-height: 1.6; }
-    .card { background: white; border: 1px solid #d7dee8; border-radius: 12px; padding: 24px; margin-top: 20px; }
-    label { display: block; font-weight: 700; margin-bottom: 10px; }
-    textarea { width: 100%; min-height: 180px; resize: vertical; padding: 12px; border: 1px solid #9ca8b8; border-radius: 8px; font: inherit; line-height: 1.5; }
-    textarea:focus, button:focus { outline: 3px solid #85b7ff; outline-offset: 2px; }
-    .controls { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 12px; }
-    .hint { color: #526071; font-size: .9rem; }
-    button { border: 0; border-radius: 8px; background: #164b9a; color: white; font: inherit; font-weight: 700; padding: 11px 20px; cursor: pointer; }
-    button:disabled { opacity: .6; cursor: wait; }
-    .risk { display: inline-block; border-radius: 999px; padding: 8px 14px; font-weight: 800; background: #e9edf3; }
-    .risk.high { color: #8c1020; background: #ffe8eb; }
-    .risk.medium { color: #704400; background: #fff0ce; }
-    .risk.low { color: #16532a; background: #e3f4e7; }
-    .risk.unknown { color: #35455c; background: #e9edf3; }
-    .error { color: #8c1020; font-weight: 700; }
-    ul { padding-left: 24px; line-height: 1.7; }
-    li { margin-bottom: 5px; }
-    .notice { margin-top: 20px; color: #526071; font-size: .9rem; }
-  </style>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Scam Risk Analyzer · ห้องทดสอบความเสี่ยง</title>
+  <link rel="stylesheet" href="/static/app.css"><script src="/static/app.js" defer></script>
 </head>
 <body>
-  <main>
-    <h1>Scam Risk Analyzer</h1>
-    <p>วางข้อความ SMS หรือแชตหนึ่งข้อความเพื่อดูสัญญาณความเสี่ยงที่ระบบตรวจพบ รองรับภาษาไทยและอังกฤษ</p>
-
-    <section class="card" aria-labelledby="input-title">
-      <h2 id="input-title">ทดสอบข้อความ</h2>
+<header class="topbar"><a class="brand" href="/">S<span>R</span>A <small>SCAM RISK ANALYZER</small></a><span id="health" class="health">กำลังเชื่อมต่อ…</span></header>
+<main>
+  <section class="intro"><span class="eyebrow">LOCAL ANALYSIS LAB · v0.3</span><h1>ตรวจสัญญาณเสี่ยง<br><span>ก่อนตัดสินใจ</span></h1><p>วางข้อความ ลิงก์ หรือภาพที่สงสัย แล้วดูเหตุผลที่ระบบตรวจพบ<br class="wide"> วิเคราะห์ไทยและอังกฤษในเครื่องของคุณ</p></section>
+  <div class="workspace">
+    <section class="panel input-panel" aria-labelledby="input-title">
+      <div class="panel-heading"><h2 id="input-title">ข้อมูลที่ต้องการตรวจ</h2><span class="step">01 / INPUT</span></div>
       <form id="analyze-form">
-        <label for="message">ข้อความที่ต้องการวิเคราะห์</label>
-        <textarea id="message" name="message" maxlength="5000" required placeholder="วางข้อความที่นี่..."></textarea>
-        <div class="controls">
-          <span class="hint">สูงสุด 5,000 ตัวอักษร</span>
-          <button id="submit-button" type="submit">วิเคราะห์</button>
+        <fieldset class="modes"><legend class="sr-only">ประเภทข้อมูล</legend>
+          <label><input type="radio" name="kind" value="text" checked><span>ข้อความ</span></label>
+          <label><input type="radio" name="kind" value="url"><span>URL</span></label>
+          <label><input type="radio" name="kind" value="image"><span>รูปภาพ</span></label>
+        </fieldset>
+        <div id="text-input">
+          <label for="content" id="content-label">วางข้อความที่ต้องการวิเคราะห์</label>
+          <textarea id="content" maxlength="5000" rows="8" placeholder="เช่น ข้อความจาก SMS, แชต หรืออีเมล…" spellcheck="false"></textarea>
+          <div class="input-meta"><span id="input-hint">ไทย / English · สูงสุด 5,000 ตัวอักษร</span><span id="count">0 / 5,000</span></div>
         </div>
+        <div id="image-input" hidden>
+          <label for="image">เลือกภาพข้อความ</label>
+          <input id="image" type="file" accept="image/png,image/jpeg">
+          <p class="muted">PNG / JPEG · ไม่เกิน 4 MB และ 8 ล้านพิกเซล<br>OCR อาจอ่านผิด กรุณาตรวจทานข้อความที่สกัดได้</p>
+          <img id="preview" alt="ภาพที่เลือกวิเคราะห์" hidden>
+        </div>
+        <div class="form-actions"><button class="primary" id="submit" type="submit">วิเคราะห์ความเสี่ยง <span aria-hidden="true">↗</span></button><button type="button" id="clear" class="secondary">ล้างข้อมูล</button></div>
+        <p id="error" class="error" role="alert" hidden></p>
       </form>
-      <p id="error" class="error" role="alert" hidden></p>
+      <div class="examples"><span>ลองตัวอย่าง</span><button type="button" data-example="otp">ขอ OTP</button><button type="button" data-example="task">งานเติมเงิน</button><button type="button" data-example="normal">ข้อความปกติ</button><button type="button" data-example="url">URL ชวนสับสน</button></div>
+      <p class="privacy">ประมวลผลในเครื่อง · ไม่บันทึกประวัติข้อความหรือภาพ · ไม่เปิดลิงก์ที่นำมาตรวจ</p>
     </section>
-
-    <section id="result" class="card" aria-live="polite" aria-label="ผลการวิเคราะห์" hidden>
-      <h2>ผลการวิเคราะห์</h2>
-      <span id="risk" class="risk unknown"></span>
-      <p id="score"></p>
-      <h2>สัญญาณที่พบ</h2>
-      <ul id="signals"></ul>
-      <h2>คำแนะนำ</h2>
-      <ul id="actions"></ul>
-      <p id="notice" class="notice"></p>
+    <section class="panel result-panel" aria-labelledby="result-title">
+      <div class="panel-heading"><h2 id="result-title">ผลการวิเคราะห์</h2><span class="step">02 / INSIGHTS</span></div>
+      <div id="empty" class="empty"><div class="empty-icon" aria-hidden="true">⌁</div><h3>เริ่มจากข้อมูลที่คุณสงสัย</h3><p>ระบบจะตรวจคำ บริบท รูปแบบข้อความ<br>และโครงสร้างลิงก์ พร้อมแสดงเหตุผล</p><span class="tag">หลายชั้น · อธิบายได้ · ทำงานในเครื่อง</span></div>
+      <div id="result" hidden>
+        <div class="result-top"><span id="risk" class="badge"></span><span id="score"></span></div>
+        <p id="summary" class="summary" role="status"></p>
+        <div id="signals"></div>
+        <div id="url-info"></div>
+        <div id="ocr-result" class="ocr-box" hidden><h3>ข้อความที่อ่านจากภาพ</h3><pre id="ocr-text"></pre><p id="ocr-note" class="muted"></p><button type="button" id="edit-ocr" class="secondary">แก้ข้อความแล้วตรวจอีกครั้ง</button></div>
+        <h3 class="advice-title">ขั้นต่อไปที่แนะนำ</h3><ul id="actions"></ul>
+        <p id="notice" class="notice"></p>
+        <details><summary>รายละเอียดสำหรับต่อยอด API</summary><pre id="json-output"></pre><button type="button" id="download" class="secondary">ดาวน์โหลดผล JSON</button></details>
+      </div>
     </section>
-
-    <p class="notice">ระบบทดสอบนี้ประเมินจากกฎที่มีอยู่ในโปรเจกต์ ผล “หลักฐานไม่พอ” ไม่ได้หมายความว่าข้อความปลอดภัย ข้อความที่วางจะส่งไปยัง service ในเครื่องนี้เท่านั้นและไม่ถูกบันทึกโดยแอป</p>
-  </main>
-  <script>
-    const form = document.getElementById("analyze-form");
-    const message = document.getElementById("message");
-    const submitButton = document.getElementById("submit-button");
-    const error = document.getElementById("error");
-    const resultSection = document.getElementById("result");
-    const risk = document.getElementById("risk");
-    const score = document.getElementById("score");
-    const signals = document.getElementById("signals");
-    const actions = document.getElementById("actions");
-    const notice = document.getElementById("notice");
-
-    function fillList(list, items) {
-      list.replaceChildren();
-      for (const item of items) {
-        const li = document.createElement("li");
-        li.textContent = item;
-        list.append(li);
-      }
-    }
-
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      error.hidden = true;
-      resultSection.hidden = true;
-      submitButton.disabled = true;
-      submitButton.textContent = "กำลังวิเคราะห์...";
-
-      try {
-        const response = await fetch("/analyze", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ kind: "text", content: message.value })
-        });
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error || "วิเคราะห์ไม่สำเร็จ");
-
-        const labels = { HIGH: "HIGH — ความเสี่ยงสูง", MEDIUM: "MEDIUM — ควรระวัง", LOW: "LOW — พบสัญญาณอ่อน" };
-        risk.textContent = data.risk ? labels[data.risk] : "หลักฐานไม่พอ";
-        risk.className = "risk " + (data.risk ? data.risk.toLowerCase() : "unknown");
-        score.textContent = data.score === null ? "ยังไม่มีคะแนนความเสี่ยง" : "คะแนนสัญญาณ: " + data.score + "/100";
-        fillList(signals, data.signals.length ? data.signals.map(item => item.reason) : ["ยังไม่พบสัญญาณที่ระบบรู้จัก"]);
-        fillList(actions, data.actions);
-        notice.textContent = data.notice;
-        resultSection.hidden = false;
-      } catch (problem) {
-        error.textContent = problem.message || "เกิดข้อผิดพลาดในการเชื่อมต่อ service";
-        error.hidden = false;
-      } finally {
-        submitButton.disabled = false;
-        submitButton.textContent = "วิเคราะห์";
-      }
-    });
-  </script>
+  </div>
+  <section class="method"><div><span class="step">HOW IT WORKS</span><h2>จากข้อความ สู่หลักฐาน</h2></div><ol><li><b>01</b>ปรับรูปแบบคำ</li><li><b>02</b>ตรวจคำและบริบท</li><li><b>03</b>ตรวจลิงก์</li><li><b>04</b>รวมสัญญาณ</li></ol></section>
+  <footer><strong>เครื่องมือวิเคราะห์เบื้องต้น</strong><p>คะแนนไม่ใช่โอกาสเป็น scam และ “หลักฐานไม่พอ” ไม่ได้แปลว่าปลอดภัย ระบบอาจเตือนผิดหรือพลาดข้อความใหม่ รวมถึง OCR ที่อ่านคลาดเคลื่อน</p></footer>
+</main>
 </body>
 </html>
-

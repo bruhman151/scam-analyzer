@@ -1,0 +1,221 @@
+{
+  "description": "Exploratory synthetic holdout; authored after v0.3 rules, before running evaluation. Labels indicate intended scam/benign scenario, not independently verified ground truth. Freeze this file; do not tune to its results.",
+  "cases": [
+    {
+      "id": "E01",
+      "language": "th",
+      "expected_alert": true,
+      "content": "เจ้าหน้าที่แจ้งว่าต้องอ่านรหัสยืนยันให้ฟังเพื่อแก้ปัญหา"
+    },
+    {
+      "id": "E02",
+      "language": "en",
+      "expected_alert": true,
+      "content": "Kindly give me the one-time password from the notification."
+    },
+    {
+      "id": "E03",
+      "language": "th",
+      "expected_alert": true,
+      "content": "บัญชีคุณกำลังถูกระงับ ให้ย้ายเงินทั้งหมดทันที"
+    },
+    {
+      "id": "E04",
+      "language": "en",
+      "expected_alert": true,
+      "content": "Police officer here. Wire your savings for our investigation now."
+    },
+    {
+      "id": "E05",
+      "language": "th",
+      "expected_alert": true,
+      "content": "ชำระค่าธรรมเนียมก่อนรับเงินกู้ที่อนุมัติแล้ว"
+    },
+    {
+      "id": "E06",
+      "language": "en",
+      "expected_alert": true,
+      "content": "Pay the tax to collect your prize today."
+    },
+    {
+      "id": "E07",
+      "language": "th",
+      "expected_alert": true,
+      "content": "ฝากเงินเข้าระบบเพื่อถอนรายได้จากการกดไลก์"
+    },
+    {
+      "id": "E08",
+      "language": "en",
+      "expected_alert": true,
+      "content": "Top up this wallet to unlock your commission."
+    },
+    {
+      "id": "E09",
+      "language": "th",
+      "expected_alert": true,
+      "content": "เจ้าหน้าที่ให้ดาวน์โหลด AnyDesk เพื่อแก้บัญชีผิดปกติ"
+    },
+    {
+      "id": "E10",
+      "language": "en",
+      "expected_alert": true,
+      "content": "Your account is locked. Enable remote access for our officer."
+    },
+    {
+      "id": "E11",
+      "language": "th",
+      "expected_alert": true,
+      "content": "ลงทุนกับเรา รับประกันผลตอบแทนทุกวัน"
+    },
+    {
+      "id": "E12",
+      "language": "en",
+      "expected_alert": true,
+      "content": "Guaranteed profit from this investment. Send money now."
+    },
+    {
+      "id": "E13",
+      "language": "th",
+      "expected_alert": true,
+      "content": "กรุณาพิมพ์เลขหลังบัตรเพื่อรับเงินคืน"
+    },
+    {
+      "id": "E14",
+      "language": "en",
+      "expected_alert": true,
+      "content": "Provide your card number and CVV to claim your refund."
+    },
+    {
+      "id": "E15",
+      "language": "en",
+      "expected_alert": true,
+      "content": "Please share your p@ssw0rd with our support agent."
+    },
+    {
+      "id": "E16",
+      "language": "th",
+      "expected_alert": true,
+      "content": "ส่งรหัส O-T-P มายืนยันตัวตน"
+    },
+    {
+      "id": "E17",
+      "language": "th",
+      "expected_alert": true,
+      "content": "รบกวนจัดการยอดตามที่คุยกันไว้ แล้วสิทธิ์ที่ได้รับจะใช้งานได้"
+    },
+    {
+      "id": "E18",
+      "language": "en",
+      "expected_alert": true,
+      "content": "The six digits that just arrived are needed by our helper. Reply with them."
+    },
+    {
+      "id": "E19",
+      "language": "th",
+      "expected_alert": false,
+      "content": "อย่าโอนเงินให้ผู้ที่อ้างว่าเป็นตำรวจ"
+    },
+    {
+      "id": "E20",
+      "language": "en",
+      "expected_alert": false,
+      "content": "Do not ever share your password with our staff."
+    },
+    {
+      "id": "E21",
+      "language": "th",
+      "expected_alert": false,
+      "content": "แจ้งเตือน: ห้ามบอกรหัส OTP กับคนอื่น"
+    },
+    {
+      "id": "E22",
+      "language": "en",
+      "expected_alert": false,
+      "content": "Your sign-in code is 345678. Never share it."
+    },
+    {
+      "id": "E23",
+      "language": "th",
+      "expected_alert": false,
+      "content": "ส่งเงินค่าอาหารให้เพื่อนด้วยนะ"
+    },
+    {
+      "id": "E24",
+      "language": "en",
+      "expected_alert": false,
+      "content": "Send money for yesterday's lunch when you have time."
+    },
+    {
+      "id": "E25",
+      "language": "th",
+      "expected_alert": false,
+      "content": "คลิก https://example.org/agenda เพื่อดูตารางประชุม"
+    },
+    {
+      "id": "E26",
+      "language": "en",
+      "expected_alert": false,
+      "content": "Our museum is open now. Visit https://example.org/"
+    },
+    {
+      "id": "E27",
+      "language": "th",
+      "expected_alert": false,
+      "content": "บัญชีคุณอาจเสี่ยง อย่ากดลิงก์ ตรวจสอบกับธนาคารโดยตรง"
+    },
+    {
+      "id": "E28",
+      "language": "en",
+      "expected_alert": false,
+      "content": "Training example: give me your password. This is a scam quotation."
+    },
+    {
+      "id": "E29",
+      "language": "th",
+      "expected_alert": false,
+      "content": "ธนาคารไม่เคยขอให้ส่งรหัสผ่านผ่านแชต"
+    },
+    {
+      "id": "E30",
+      "language": "en",
+      "expected_alert": false,
+      "content": "Your account is not suspended. No action is needed."
+    },
+    {
+      "id": "E31",
+      "language": "en",
+      "expected_alert": false,
+      "content": "IT helpdesk appointment: please install TeamViewer on the lab PC."
+    },
+    {
+      "id": "E32",
+      "language": "th",
+      "expected_alert": false,
+      "content": "การลงทุนไม่มีการรับประกันผลตอบแทน ควรศึกษาความเสี่ยง"
+    },
+    {
+      "id": "E33",
+      "language": "th",
+      "expected_alert": true,
+      "content": "ช่ ว ย ส่ ง ร หั ส ลั บ ที่เ พิ่งไ ด้ รั บ มาให้ฉัน"
+    },
+    {
+      "id": "E34",
+      "language": "en",
+      "expected_alert": true,
+      "content": "Can you forward those numbers to my assistant? Keep this between us."
+    },
+    {
+      "id": "E35",
+      "language": "th",
+      "expected_alert": false,
+      "content": "ประชุมด่วนภายในวันนี้ ส่งรายงานที่สรุปไว้แล้วด้วย"
+    },
+    {
+      "id": "E36",
+      "language": "en",
+      "expected_alert": false,
+      "content": "Please confirm your attendance at the meeting tomorrow."
+    }
+  ]
+}
