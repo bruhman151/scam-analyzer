@@ -1,0 +1,398 @@
+{
+  "ruleset": "0.3.0",
+  "dataset_sha256": "7df3fbf4ea3e5e6c535b6eeaffeaf311a0365f5a8126f21e82f364a52db9472f",
+  "dataset": "tests/evaluation.json",
+  "cases": 36,
+  "alert_threshold": "MEDIUM or HIGH",
+  "scope": "Synthetic, single-author exploratory evaluation; not real-world accuracy or an independent study. Abstentions count as negative predictions for this threshold.",
+  "counts": {
+    "tp": 16,
+    "fp": 5,
+    "tn": 11,
+    "fn": 4,
+    "abstained": 13
+  },
+  "precision": 0.7619,
+  "recall": 0.8,
+  "false_positive_rate": 0.3125,
+  "results": [
+    {
+      "id": "E01",
+      "expected_alert": true,
+      "alert": true,
+      "outcome": "tp",
+      "risk": "HIGH",
+      "score": 70,
+      "signals": [
+        "requests_secret"
+      ]
+    },
+    {
+      "id": "E02",
+      "expected_alert": true,
+      "alert": true,
+      "outcome": "tp",
+      "risk": "HIGH",
+      "score": 70,
+      "signals": [
+        "requests_secret"
+      ]
+    },
+    {
+      "id": "E03",
+      "expected_alert": true,
+      "alert": true,
+      "outcome": "tp",
+      "risk": "HIGH",
+      "score": 60,
+      "signals": [
+        "account_threat",
+        "requests_transfer",
+        "fear_or_urgency"
+      ]
+    },
+    {
+      "id": "E04",
+      "expected_alert": true,
+      "alert": true,
+      "outcome": "tp",
+      "risk": "MEDIUM",
+      "score": 50,
+      "signals": [
+        "requests_transfer",
+        "authority_transfer"
+      ]
+    },
+    {
+      "id": "E05",
+      "expected_alert": true,
+      "alert": true,
+      "outcome": "tp",
+      "risk": "MEDIUM",
+      "score": 55,
+      "signals": [
+        "advance_fee"
+      ]
+    },
+    {
+      "id": "E06",
+      "expected_alert": true,
+      "alert": true,
+      "outcome": "tp",
+      "risk": "MEDIUM",
+      "score": 55,
+      "signals": [
+        "advance_fee"
+      ]
+    },
+    {
+      "id": "E07",
+      "expected_alert": true,
+      "alert": true,
+      "outcome": "tp",
+      "risk": "HIGH",
+      "score": 60,
+      "signals": [
+        "task_deposit"
+      ]
+    },
+    {
+      "id": "E08",
+      "expected_alert": true,
+      "alert": true,
+      "outcome": "tp",
+      "risk": "HIGH",
+      "score": 60,
+      "signals": [
+        "task_deposit"
+      ]
+    },
+    {
+      "id": "E09",
+      "expected_alert": true,
+      "alert": true,
+      "outcome": "tp",
+      "risk": "HIGH",
+      "score": 95,
+      "signals": [
+        "account_threat",
+        "remote_access",
+        "remote_access_pressure"
+      ]
+    },
+    {
+      "id": "E10",
+      "expected_alert": true,
+      "alert": true,
+      "outcome": "tp",
+      "risk": "HIGH",
+      "score": 95,
+      "signals": [
+        "account_threat",
+        "remote_access",
+        "remote_access_pressure"
+      ]
+    },
+    {
+      "id": "E11",
+      "expected_alert": true,
+      "alert": true,
+      "outcome": "tp",
+      "risk": "MEDIUM",
+      "score": 45,
+      "signals": [
+        "guaranteed_returns"
+      ]
+    },
+    {
+      "id": "E12",
+      "expected_alert": true,
+      "alert": true,
+      "outcome": "tp",
+      "risk": "HIGH",
+      "score": 65,
+      "signals": [
+        "requests_transfer",
+        "guaranteed_returns"
+      ]
+    },
+    {
+      "id": "E13",
+      "expected_alert": true,
+      "alert": true,
+      "outcome": "tp",
+      "risk": "MEDIUM",
+      "score": 35,
+      "signals": [
+        "requests_personal_data"
+      ]
+    },
+    {
+      "id": "E14",
+      "expected_alert": true,
+      "alert": true,
+      "outcome": "tp",
+      "risk": "MEDIUM",
+      "score": 35,
+      "signals": [
+        "requests_personal_data"
+      ]
+    },
+    {
+      "id": "E15",
+      "expected_alert": true,
+      "alert": true,
+      "outcome": "tp",
+      "risk": "HIGH",
+      "score": 70,
+      "signals": [
+        "requests_secret"
+      ]
+    },
+    {
+      "id": "E16",
+      "expected_alert": true,
+      "alert": true,
+      "outcome": "tp",
+      "risk": "HIGH",
+      "score": 70,
+      "signals": [
+        "requests_secret"
+      ]
+    },
+    {
+      "id": "E17",
+      "expected_alert": true,
+      "alert": false,
+      "outcome": "fn",
+      "risk": null,
+      "score": null,
+      "signals": []
+    },
+    {
+      "id": "E18",
+      "expected_alert": true,
+      "alert": false,
+      "outcome": "fn",
+      "risk": null,
+      "score": null,
+      "signals": []
+    },
+    {
+      "id": "E19",
+      "expected_alert": false,
+      "alert": false,
+      "outcome": "tn",
+      "risk": null,
+      "score": null,
+      "signals": []
+    },
+    {
+      "id": "E20",
+      "expected_alert": false,
+      "alert": false,
+      "outcome": "tn",
+      "risk": null,
+      "score": null,
+      "signals": []
+    },
+    {
+      "id": "E21",
+      "expected_alert": false,
+      "alert": true,
+      "outcome": "fp",
+      "risk": "HIGH",
+      "score": 70,
+      "signals": [
+        "requests_secret"
+      ]
+    },
+    {
+      "id": "E22",
+      "expected_alert": false,
+      "alert": false,
+      "outcome": "tn",
+      "risk": null,
+      "score": null,
+      "signals": []
+    },
+    {
+      "id": "E23",
+      "expected_alert": false,
+      "alert": false,
+      "outcome": "tn",
+      "risk": "LOW",
+      "score": 20,
+      "signals": [
+        "requests_transfer"
+      ]
+    },
+    {
+      "id": "E24",
+      "expected_alert": false,
+      "alert": false,
+      "outcome": "tn",
+      "risk": "LOW",
+      "score": 20,
+      "signals": [
+        "requests_transfer"
+      ]
+    },
+    {
+      "id": "E25",
+      "expected_alert": false,
+      "alert": false,
+      "outcome": "tn",
+      "risk": null,
+      "score": null,
+      "signals": []
+    },
+    {
+      "id": "E26",
+      "expected_alert": false,
+      "alert": false,
+      "outcome": "tn",
+      "risk": null,
+      "score": null,
+      "signals": []
+    },
+    {
+      "id": "E27",
+      "expected_alert": false,
+      "alert": true,
+      "outcome": "fp",
+      "risk": "MEDIUM",
+      "score": 25,
+      "signals": [
+        "account_threat"
+      ]
+    },
+    {
+      "id": "E28",
+      "expected_alert": false,
+      "alert": true,
+      "outcome": "fp",
+      "risk": "HIGH",
+      "score": 70,
+      "signals": [
+        "requests_secret"
+      ]
+    },
+    {
+      "id": "E29",
+      "expected_alert": false,
+      "alert": false,
+      "outcome": "tn",
+      "risk": null,
+      "score": null,
+      "signals": []
+    },
+    {
+      "id": "E30",
+      "expected_alert": false,
+      "alert": false,
+      "outcome": "tn",
+      "risk": null,
+      "score": null,
+      "signals": []
+    },
+    {
+      "id": "E31",
+      "expected_alert": false,
+      "alert": true,
+      "outcome": "fp",
+      "risk": "MEDIUM",
+      "score": 55,
+      "signals": [
+        "remote_access"
+      ]
+    },
+    {
+      "id": "E32",
+      "expected_alert": false,
+      "alert": true,
+      "outcome": "fp",
+      "risk": "MEDIUM",
+      "score": 45,
+      "signals": [
+        "guaranteed_returns"
+      ]
+    },
+    {
+      "id": "E33",
+      "expected_alert": true,
+      "alert": false,
+      "outcome": "fn",
+      "risk": null,
+      "score": null,
+      "signals": []
+    },
+    {
+      "id": "E34",
+      "expected_alert": true,
+      "alert": false,
+      "outcome": "fn",
+      "risk": null,
+      "score": null,
+      "signals": []
+    },
+    {
+      "id": "E35",
+      "expected_alert": false,
+      "alert": false,
+      "outcome": "tn",
+      "risk": null,
+      "score": null,
+      "signals": []
+    },
+    {
+      "id": "E36",
+      "expected_alert": false,
+      "alert": false,
+      "outcome": "tn",
+      "risk": null,
+      "score": null,
+      "signals": []
+    }
+  ]
+}

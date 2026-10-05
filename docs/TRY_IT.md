@@ -1,29 +1,9 @@
-# ทดลองวางข้อความในเครื่อง
+# Five-minute demo
 
-1. ดับเบิลคลิก `run.cmd` ในโฟลเดอร์โปรเจกต์ หรือรัน `python app.py` จาก terminal ที่ติดตั้ง Flask แล้ว
-2. เปิด `http://127.0.0.1:5000` ใน browser
-3. วางข้อความหนึ่งข้อความแล้วกด **วิเคราะห์**
-4. ดูระดับความเสี่ยงหรือ “หลักฐานไม่พอ” พร้อมสัญญาณและคำแนะนำ
-5. กลับมาที่หน้าต่างโปรแกรมแล้วกด `Ctrl+C` เพื่อหยุด service
-
-ถ้าหน้าเว็บเปิดอยู่แล้ว ให้ใช้หน้านั้นต่อได้เลย การเปิด `run.cmd` ซ้ำจะแจ้งว่าพอร์ต 5000 ถูกใช้งานอยู่
-
-ตัวอย่างสังเคราะห์สำหรับลอง:
-
-| ข้อความ | ผลที่คาดหวัง |
-|---|---|
-| `เจ้าหน้าที่ขอให้ส่งรหัส OTP เพื่อปลดล็อกบัญชี` | HIGH |
-| `กรุณาส่งเลขบัตรประชาชนและวันเกิดเพื่อรับเงินคืน` | MEDIUM |
-| `โอนเงินค่าอาหารให้เพื่อนตอนเย็น` | LOW |
-| `ช่วยส่งรายงานด่วนก่อนเที่ยง` | หลักฐานไม่พอ |
-
-ข้อมูลจะส่งไปยัง service ที่รันอยู่ในเครื่องนี้เท่านั้น แอปไม่บันทึกข้อความลงไฟล์หรือฐานข้อมูล เพื่อความเป็นส่วนตัว ควรลบข้อมูลส่วนบุคคลออกก่อนใช้ข้อความจริงทดสอบ
-
-## ผลตรวจหน้าทดสอบจริง — 5 ตุลาคม 2026
-
-- เปิด `run.cmd` แล้วเข้า `http://127.0.0.1:5000` ได้ หน้าเว็บแสดงช่องวางข้อความและปุ่มวิเคราะห์
-- วางข้อความขอ OTP → แสดง HIGH, คะแนน 70, เหตุผลและคำแนะนำตรงกับ API
-- วางข้อความ “ช่วยส่งรายงานด่วนก่อนเที่ยง” → แสดง “หลักฐานไม่พอ” โดยไม่มีคะแนน
-- เปิด `run.cmd` ซ้ำขณะ service ทำงาน → แจ้งว่าพอร์ตถูกใช้งาน ไม่เปิด service ซ้อน
-- ชุดทดสอบอัตโนมัติล่าสุดผ่าน 16 tests; ผลนี้ยังไม่ใช่การวัด accuracy กับข้อมูลใหม่
-
+1. Run `setup.cmd` once, then `run.cmd`; open http://127.0.0.1:5000/. `/health` shows OCR availability.
+2. Click **ขอ OTP**: the system normalizes separated O T P and returns HIGH with a reason.
+3. Click **ข้อความปกติ**: a warning that says “ห้ามบอก OTP” has insufficient evidence and no score.
+4. Choose URL, enter `https://bank.example.org@192.0.2.10/login`: actual host is 192.0.2.10, before @ is userinfo. The URL is never opened.
+5. Choose image, upload `tests/fixtures/thai.png`: review extracted text, then edit and analyze again.
+6. Run `python scripts/provider_simulator.py --stress 100` from the virtual environment. It sends only synthetic cases to the local API.
+7. Show one error in `docs/evaluation-results.json`; explain that 36 synthetic cases do not measure real-world accuracy.

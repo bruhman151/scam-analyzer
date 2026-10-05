@@ -7,7 +7,7 @@ URL_RE = re.compile(r"""(?:https?://|www\.)[^\s<>"'\u200b]+""", re.I)
 SHORTENERS = frozenset({"bit.ly", "tinyurl.com", "t.co", "shorturl.at", "is.gd", "cutt.ly"})
 
 def parse_url(value: str):
-    value = value.strip().rstrip(".,;!?)\\]}")
+    value = value.strip().rstrip(".,;!?)}")
     if not value or len(value) > 2048 or re.search(r"[\s\x00-\x1f\\]", value):
         raise ValueError("URL ต้องไม่มีช่องว่างและยาวไม่เกิน 2,048 ตัวอักษร")
     if "://" not in value:
@@ -55,4 +55,4 @@ def inspect_url(value: str) -> dict:
     return {"host": host, "scheme": parts.scheme, "signals": findings, "observations": observations}
 
 def urls_in_text(text: str) -> list[str]:
-    return list(dict.fromkeys(m.group(0).rstrip(".,;!?)\\]}") for m in URL_RE.finditer(text)))[:10]
+    return list(dict.fromkeys(m.group(0).rstrip(".,;!?)}") for m in URL_RE.finditer(text)))[:10]

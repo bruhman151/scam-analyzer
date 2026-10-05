@@ -4,7 +4,7 @@ See docs/RESEARCH.md for sources. Every regex context gap is bounded.
 import re
 from dataclasses import dataclass
 
-RULESET_VERSION = "0.3.0"
+RULESET_VERSION = "0.3.1"
 
 @dataclass(frozen=True)
 class Rule:
@@ -55,7 +55,7 @@ RULES = (
 )
 COMPILED_RULES = tuple((r, tuple(re.compile(p, re.I) for p in r.patterns)) for r in RULES)
 PROHIBITION = re.compile(r"(?:ห้าม|อย่า|ไม่ควร|ไม่ต้อง|ไม่ให้|ไม่เคย|ไม่ขอให้|ไม่ต้องการให้|ไม่จำเป็นต้อง|(?:do not|don't|never|should not|will not|won't)\s+(?:ever\s+)?)(?:\s|ทำการ)*$", re.I)
-INTERNAL_NEGATION = re.compile(r"\b(?:not|never)\b|ไม่ได้|ไม่ถูก|ไม่เคย", re.I)
+INTERNAL_NEGATION = re.compile(r"\b(?:not|never)\b|ไม่ได้|ไม่ถูก|ไม่เคย|ห้าม|อย่า|ไม่ควร|ไม่ต้อง", re.I)
 LINK_ACTION = re.compile(r"คลิก|กด|เปิด|เข้า|\b(?:click|visit|open|enter|follow)\b", re.I)
 SENSITIVE_CONTEXT = re.compile(r"ยืนยัน|ปลดล็อก|คืนเงิน|รหัสผ่าน|\b(?:password|refund|verify|confirm|log[ -]?in)\b", re.I)
 URGENCY = re.compile(r"ทันที|ภายในวันนี้|ด่วน|\b(?:immediately|now|urgent|within \d+ (?:minutes|hours))\b", re.I)

@@ -1,36 +1,55 @@
-# Scam Risk Analyzer MVP (กำลังพัฒนา)
+# Scam Risk Analyzer
 
-บริการประเมินความเสี่ยง scam จากข้อความ, URL และภาพ สำหรับ demo การเชื่อมต่อจากผู้ให้บริการจำลอง ผลลัพธ์เน้นระดับความเสี่ยง สัญญาณที่ตรวจพบ เหตุผล และคำแนะนำ ภายใน MVP ใช้กฎที่อธิบายได้; ภาพจะผ่าน OCR ก่อนวิเคราะห์ข้อความ การบล็อกอัตโนมัติและการเชื่อมผู้ให้บริการจริงเป็นงานระยะถัดไป
+**Explainable Thai/English risk triage for messages, URLs and screenshots.** A local portfolio MVP that shows *why* a message deserves review. The score is a heuristic sum of signals, not a probability or a verdict.
 
-## สถานะปัจจุบัน: วัน 2
+## Try it
 
-- ใช้งานได้: วางข้อความในหน้าเว็บ local หรือส่งผ่าน `POST /analyze`; ตรวจสัญญาณคำขอรหัส, ปัญหาบัญชี, ลิงก์พร้อมคำชวนทำรายการ, การโอนเงิน, การขอข้อมูลส่วนตัว และความเร่งด่วนที่มีบริบทบัญชี
-- ยังไม่เสร็จ: วิเคราะห์ URL ที่ส่งมาเดี่ยว ๆ, ภาพ OCR, provider simulator และการประเมินผลด้วยตัวอย่างใหม่ที่ไม่ได้ใช้สร้างกฎ
-- คะแนนปัจจุบันเป็นน้ำหนักกฎชั่วคราว **ไม่ใช่ความน่าจะเป็นที่เป็น scam**
+Windows 10/11 with Python 3.12+:
 
-## ลองรันส่วนแรก
+1. Double-click `setup.cmd`. It creates a project-local virtual environment and installs pinned Python packages. For OCR it downloads Tesseract 5.5.3 and Thai/English language files into `.tools/`; local 7-Zip is required. If OCR setup fails, text and URL modes remain available.
+2. Double-click `run.cmd` and open [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
+3. Pick a sample message, URL, or `tests/fixtures/thai.png`. Review the signal reasons and the OCR text.
 
-ใช้ Python 3.10+ และติดตั้ง dependency จาก `requirements.txt` บน Windows เครื่องนี้สามารถดับเบิลคลิก `run.cmd` แล้วเปิด `http://127.0.0.1:5000` เพื่อวางข้อความทดสอบได้ ดู [ขั้นตอนทดลอง](docs/TRY_IT.md) สำหรับตัวอย่างและวิธีหยุด service
+Linux/macOS: create a Python 3.12+ venv, run `pip install -r requirements-lock.txt`, install Tesseract with `tha` and `eng` data using your OS package manager, then `python app.py`. The service binds to 127.0.0.1 only.
 
-หากรันจาก terminal ให้ใช้ `python app.py` ในโฟลเดอร์นี้ Service เปิดเฉพาะเครื่องที่ `http://127.0.0.1:5000` ส่ง JSON ไปที่ `POST /analyze` หากคำสั่ง `python` ชี้ไปที่ Windows App alias ที่ใช้ไม่ได้ ให้ใช้พาธ Python ที่ติดตั้งจริงแทน
+The source does **not** contain downloaded OCR binaries, the virtual environment, or personal submissions. Python packages are pinned in `requirements-lock.txt`; OCR installer/model hashes are checked by `scripts/setup_ocr.py`.
 
-```json
-{"kind":"text","content":"เจ้าหน้าที่ขอให้ส่งรหัส OTP เพื่อปลดล็อกบัญชี"}
+## What it analyzes
+
+| Layer | Examples | Limits |
+|---|---|---|
+| Normalization | Unicode width/case, hidden characters, known O T P / p@ssw0rd variants | Narrow glossary, no arbitrary fuzzy search |
+| Phrases and context | Requests for OTP/personal data, transfers, advance fees, task deposits, remote access, guaranteed returns | Bounded patterns can miss new wording |
+| Negation | “ห้ามส่ง OTP”, “do not share” | Quoted/long-context advice may still be flagged |
+| Static URLs | IP host, @ userinfo, shortener, punycode, long host | Never opens links or checks reputation |
+| Combination | Threat + urgency, authority + transfer, remote access + account problem | Weights are heuristic |
+| Image | Local Thai+English OCR then same text analyzer | OCR must be reviewed; unreadable images abstain |
+
+No detected signal returns `insufficient_evidence` with no score. It never returns a “safe” verdict. The browser shows recommendations for checking an independent official channel.
+
+## Architecture and tests
+
+```mermaid
+flowchart LR
+  A[Browser or synthetic provider] --> B[Local HTTP API]
+  B --> C[Text / URL / OCR]
+  C --> D[Normalize + rules + URL parsing]
+  D --> E[Signal explanations + score + next steps]
 ```
 
-ทดสอบส่วนแรกด้วย `python -m unittest discover -s tests -v` ดู [API contract](docs/API_CONTRACT.md) สำหรับรูปแบบผลลัพธ์ที่เสนอ
+`app.py` handles validation and localhost serving; `analyzer.py` combines signals; `rules.py` holds versioned indicators; `normalization.py`, `url_analysis.py`, and `ocr.py` isolate the layers. `scripts/provider_simulator.py` shows how a provider could call the API without claiming an actual integration. [API contract](docs/API_CONTRACT.md) and [research mapping](docs/RESEARCH.md) document extension points.
 
-## เอกสารระหว่างพัฒนา
+From the project directory, run:
 
-- [แผน 7 วัน](docs/PLAN.md)
-- [ข้อมูลรูปแบบการหลอกลวงและแหล่งอ้างอิง](docs/RESEARCH.md)
-- [API contract](docs/API_CONTRACT.md)
-- [ตัวอย่างทดสอบที่คาดหวัง](tests/cases.json)
-- [ผลการทดสอบวัน 1](docs/DAY1_RESULTS.md)
-- [ผลการทดสอบและคะแนนวัน 2](docs/DAY2_RESULTS.md)
-- [ทดลองวางข้อความด้วยตนเอง](docs/TRY_IT.md)
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+.\.venv\Scripts\python.exe scripts\provider_simulator.py --stress 100
+.\.venv\Scripts\python.exe scripts\evaluate.py
+.\.venv\Scripts\python.exe scripts\benchmark.py
+```
 
-## ข้อจำกัดและการใช้ AI
+The 36 synthetic evaluation cases currently produce **16 true alerts, 13 non-alerts, 3 false alerts and 4 missed alerts** at MEDIUM/HIGH threshold. The numbers are from a single-author exploratory set that informed two fixes; they cannot be generalized. The exact outcome list is in [evaluation results](docs/evaluation-results.json) and the earlier run in [baseline results](docs/evaluation-baseline.json). [Benchmark results](docs/benchmark-results.json) compare identical rule output over 1,058 synthetic texts (zero mismatches) and show local latency; they exclude OCR and HTTP.
 
-ถ้าไม่พบสัญญาณจะคืน `insufficient_evidence` พร้อม `risk: null` และ `score: null` ไม่แสดง LOW โดยอัตโนมัติ กฎยังจับข้อความที่เขียนเลี่ยงคำได้ไม่ครบ และไม่ได้ยืนยันว่า URL ใดปลอดภัย ไม่มีการเก็บข้อความที่ส่งเข้า API และยังไม่มี LLM/API ภายนอกใน runtime ของระบบ การพัฒนาใช้ AI ช่วยวางแผนและเขียน code โดยเจ้าของโปรเจกต์ต้องตรวจ ตัดสินใจ และอธิบาย logic ก่อนถือว่าเสร็จ
+## Responsible scope
 
+This is a **local demonstration and starting point**, not a live protection system. It cannot intercept SMS/calls, authenticate a bank, prove a URL is malicious, or guarantee that an unflagged message is safe. No submissions are stored by the service and no URL is fetched. Browser history and an explicit JSON download are under the user's control. See [portfolio briefing](docs/PORTFOLIO.md) for design choices, known failures, roadmap, contribution disclosure and skills to learn. The demo walkthrough is [here](docs/TRY_IT.md).

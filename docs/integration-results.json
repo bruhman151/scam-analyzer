@@ -1,0 +1,107 @@
+{
+  "service_version": "0.3.1",
+  "integration_cases": [
+    {
+      "id": "TH-OTP-REQUEST",
+      "risk": "HIGH",
+      "milliseconds": 81.09
+    },
+    {
+      "id": "EN-CODE-REQUEST",
+      "risk": "HIGH",
+      "milliseconds": 2.25
+    },
+    {
+      "id": "TH-OTP-NOTICE",
+      "risk": null,
+      "milliseconds": 2.25
+    },
+    {
+      "id": "TH-OTP-PROHIBITION",
+      "risk": null,
+      "milliseconds": 2.83
+    },
+    {
+      "id": "EN-CODE-PROHIBITION",
+      "risk": null,
+      "milliseconds": 2.85
+    },
+    {
+      "id": "TH-URGENT-WORK",
+      "risk": null,
+      "milliseconds": 2.11
+    },
+    {
+      "id": "EN-URGENT-WORK",
+      "risk": null,
+      "milliseconds": 2.4
+    },
+    {
+      "id": "TH-BANK-LINK",
+      "risk": "HIGH",
+      "milliseconds": 2.47
+    },
+    {
+      "id": "EN-GOV-REFUND",
+      "risk": "HIGH",
+      "milliseconds": 2.03
+    },
+    {
+      "id": "TH-TRANSFER",
+      "risk": "HIGH",
+      "milliseconds": 1.9
+    },
+    {
+      "id": "EN-TRANSFER",
+      "risk": "HIGH",
+      "milliseconds": 3.12
+    },
+    {
+      "id": "TH-PERSONAL-DATA",
+      "risk": "MEDIUM",
+      "milliseconds": 2.72
+    },
+    {
+      "id": "EN-BENIGN-LINK",
+      "risk": null,
+      "milliseconds": 2.32
+    },
+    {
+      "id": "TH-VERIFY-OFFICIAL",
+      "risk": null,
+      "milliseconds": 1.76
+    },
+    {
+      "id": "TH-BANK-SEMINAR",
+      "risk": null,
+      "milliseconds": 1.73
+    },
+    {
+      "id": "TH-SAFETY-ADVICE",
+      "risk": "MEDIUM",
+      "milliseconds": 1.78
+    },
+    {
+      "id": "TH-ORDINARY-TRANSFER",
+      "risk": "LOW",
+      "milliseconds": 6.4
+    },
+    {
+      "id": "TH-SUBTLE",
+      "risk": "MEDIUM",
+      "milliseconds": 2.85
+    },
+    {
+      "id": "URL-IP-LOGIN",
+      "risk": "MEDIUM",
+      "milliseconds": 2.22
+    },
+    {
+      "id": "IMAGE-THAI",
+      "risk": "HIGH"
+    }
+  ],
+  "concurrent_text_requests": 100,
+  "concurrent_failures": 0,
+  "ocr_exercised": true
+}

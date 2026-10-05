@@ -1,0 +1,35 @@
+{
+  "ruleset": "0.3.1",
+  "python": "3.14.3",
+  "platform": "Windows",
+  "output_equivalence_cases": 1058,
+  "mismatches": 0,
+  "timings": {
+    "short_messages": {
+      "reference": {
+        "median_ms": 0.0829,
+        "p95_ms": 0.1693,
+        "mean_ms": 0.1009
+      },
+      "optimized": {
+        "median_ms": 0.0698,
+        "p95_ms": 0.1472,
+        "mean_ms": 0.0843
+      }
+    },
+    "long_repeated": {
+      "reference": {
+        "median_ms": 7.3274,
+        "p95_ms": 8.5473,
+        "mean_ms": 6.1815
+      },
+      "optimized": {
+        "median_ms": 6.1639,
+        "p95_ms": 8.0811,
+        "mean_ms": 5.529
+      }
+    }
+  },
+  "peak_traced_python_bytes": 73221,
+  "limits": "Microbenchmark in this environment, not a production SLA. Excludes HTTP/OCR and native process memory; synthetic workload. Reference uses the same policy without per-rule early exit."
+}

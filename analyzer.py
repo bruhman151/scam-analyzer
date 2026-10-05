@@ -19,6 +19,8 @@ def _match(clause, patterns, rule_id):
                 prefix = clause[max(0, match.start() - 60):match.start()]
                 if PROHIBITION.search(prefix) or INTERNAL_NEGATION.search(match.group()):
                     continue
+                if rule_id == "guaranteed_returns" and re.search(r"(?:ไม่มีการ|ไม่สามารถ|ไม่เคย|not|no)\s*$", prefix):
+                    continue
             if rule_id == "secrecy_pressure" and re.search(r"otp|รหัส|password|verification|code", match.group(), re.I):
                 continue
             return match.group()
@@ -40,6 +42,8 @@ def _analyze(content: str, *, optimized=True) -> dict:
     if not isinstance(content, str) or not content.strip() or len(content) > MAX_TEXT_LENGTH:
         raise ValueError("กรุณาใส่ข้อความ 1–5,000 ตัวอักษร")
     text, changes = normalize(content)
+    if len(text) > 10000:
+        raise ValueError("ข้อความหลังปรับรูปแบบยาวเกิน 10,000 ตัวอักษร")
     clauses = [c.strip() for c in CLAUSES.split(text) if c.strip()]
     signals, actions, url_details, found = [], [], [], set()
     def add(key, weight, reason, evidence, layer, action=None):

@@ -1,37 +1,13 @@
-# Scam Risk Analyzer API contract (ร่างสำหรับ review)
+# Local HTTP API v0.3.1
 
-Service รันเฉพาะในเครื่องเพื่อ demo การเชื่อมต่อกับผู้ให้บริการจำลอง ข้อมูลที่ส่งเข้าไม่ถูกบันทึกลงฐานข้อมูลหรือ log ของแอป
+Base: `http://127.0.0.1:5000`. Local host/origin boundary; JSON errors; no response caching. Inputs are not persisted. Links are not opened.
 
-## ส่วนที่ทำแล้ว: ข้อความ
+| Route | Input | Response |
+|---|---|---|
+| `GET /health` | none | status, ruleset version, OCR availability/languages |
+| `POST /analyze` | JSON `{"kind":"text","content":"..."}` or `{"kind":"url","content":"https://..."}` | risk result |
+| `POST /analyze/image` | multipart field `image`, PNG/JPEG | risk result plus OCR text/confidence/review notice |
 
-`POST /analyze` รับ JSON:
+Text: 1–5,000 characters. Standalone URL: HTTP(S), up to 2,048 characters. Image: 1–4 MB, 32×32 to 8 megapixels, OCR timeout 12 seconds, one OCR at a time. Image is decoded then re-encoded in memory; the filename is never used. Thai and English OCR data are required.
 
-```json
-{"kind":"text","content":"เจ้าหน้าที่ขอให้ส่งรหัส OTP เพื่อปลดล็อกบัญชี"}
-```
-
-ตอบกลับตัวอย่าง (น้ำหนักคะแนนยังเป็นค่าชั่วคราว):
-
-```json
-{
-  "status": "analyzed",
-  "risk": "HIGH",
-  "score": 70,
-  "signals": [{"id": "requests_secret", "weight": 70, "reason": "ข้อความขอ OTP รหัสยืนยัน หรือรหัสผ่าน"}],
-  "actions": ["อย่าให้รหัส OTP รหัสยืนยัน หรือรหัสผ่านกับผู้อื่น", "ตรวจสอบกับองค์กรผ่านช่องทางที่ค้นหาเอง"],
-  "notice": "คะแนนเป็นผลรวมของสัญญาณที่ตรวจพบ ไม่ใช่ความน่าจะเป็นที่เป็น scam"
-}
-```
-
-`GET /health` ตอบสถานะ service คำขอชนิดผิดหรือข้อความว่างตอบ 400 โดยไม่เรียกตัววิเคราะห์
-
-เมื่อข้อความไม่ตรงกับสัญญาณที่ระบบรู้จัก จะตอบ `status: "insufficient_evidence"`, `risk: null`, `score: null` และคำแนะนำให้ตรวจสอบต่อ การไม่พบสัญญาณไม่ถูกแปลเป็น LOW
-
-## ส่วนที่จะเพิ่มในวันถัดไป
-
-- URL: `POST /analyze` ด้วย `kind: "url"` และ `content` เป็น URL; ไม่เปิด URL
-- ภาพ: เสนอ `POST /analyze/image` ด้วย multipart upload; ใช้ OCR แล้วเรียก core เดียวกัน
-- ภาพอ่านไม่ได้หรือ OCR ไม่มี: `status: "unable_to_analyze"`, `risk: null` พร้อมเหตุผล ไม่แปลงเป็น LOW
-
-`LOW / MEDIUM / HIGH` ใช้เฉพาะเมื่อมีสัญญาณและคำนวณคะแนนได้ เกณฑ์คะแนนเป็น heuristic ที่ต้องปรับกับผลทดสอบ ดูตารางน้ำหนักที่ [ผลวัน 2](DAY2_RESULTS.md)
-
+Result fields: `status`, `risk` (HIGH/MEDIUM/LOW or null), `score` (0–100 or null), `signals` (id, weight, reason, masked evidence, layer), `actions`, `notice`, `version`, `kind`, `analysis`; image also has `ocr`. Each signal scores once. HIGH ≥60, MEDIUM 25–59, LOW 1–24. No signals return `insufficient_evidence`, null risk and null score; this does not mean safe. OCR failures return HTTP 422/429/503 with `unable_to_analyze`, null risk/score, `error` and `code`. Invalid JSON/content returns 400; oversized input returns 413. The score is not a scam probability.

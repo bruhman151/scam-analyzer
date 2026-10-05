@@ -40,6 +40,14 @@ class LayerTests(unittest.TestCase):
     def test_secret_notice_no_secrecy_pressure(self):
         self.assertIsNone(analyze_text("ห้ามบอกรหัส OTP ให้คนอื่น")["risk"])
 
+    def test_warning_before_prohibition(self):
+        self.assertIsNone(analyze_text("แจ้งเตือน: ห้ามบอกรหัส OTP กับคนอื่น")["risk"])
+        self.assertIsNone(analyze_text("การลงทุนไม่มีการรับประกันผลตอบแทน ควรศึกษาความเสี่ยง")["risk"])
+
+    def test_decomposed_thai_sara_am(self):
+        for text in ["ตำรวจให้โอนเงินเพื่อตรวจสอบ", "ตํารวจให้โอนเงินเพื่อตรวจสอบ"]:
+            self.assertIn("authority_transfer", {s["id"] for s in analyze_text(text)["signals"]})
+
     def test_unrelated_sentences_do_not_form_link_signal(self):
         result = analyze_text("Click https://example.org/agenda. We will discuss how to verify claims.")
         self.assertNotIn("link_with_account_action", {s["id"] for s in result["signals"]})
@@ -66,6 +74,7 @@ class LayerTests(unittest.TestCase):
 
     def test_normal_url_is_not_declared_safe(self):
         self.assertIsNone(analyze_url("https://example.org/")["risk"])
+        self.assertEqual(analyze_url("http://[::1]")["risk"], "MEDIUM")
 
     def test_invalid_url(self):
         for url in ["javascript:alert(1)", "https://", "https://[broken", "https://x.example:bad",
