@@ -1,0 +1,22 @@
+[
+  {"id":"TH-OTP-REQUEST","kind":"text","content":"เจ้าหน้าที่ธนาคารขอให้ส่งรหัส OTP เพื่อปลดล็อกบัญชี","expected_risk":"HIGH","expected_signals":["requests_secret"],"category":"otp_request"},
+  {"id":"EN-CODE-REQUEST","kind":"text","content":"To protect your account, share your verification code with our agent now.","expected_risk":"HIGH","expected_signals":["requests_secret"],"category":"otp_request"},
+  {"id":"TH-OTP-NOTICE","kind":"text","content":"รหัส OTP 123456 สำหรับเข้าสู่ระบบ ห้ามบอกรหัสนี้กับใคร","expected_status":"insufficient_evidence","expected_risk":null,"expected_signals":[],"category":"benign_otp_notice"},
+  {"id":"TH-OTP-PROHIBITION","kind":"text","content":"ห้ามส่งรหัส OTP ให้ใครเด็ดขาด","expected_status":"insufficient_evidence","expected_risk":null,"expected_signals":[],"category":"benign_otp_notice"},
+  {"id":"EN-CODE-PROHIBITION","kind":"text","content":"Do not share your verification code with anyone","expected_status":"insufficient_evidence","expected_risk":null,"expected_signals":[],"category":"benign_otp_notice"},
+  {"id":"TH-URGENT-WORK","kind":"text","content":"ช่วยส่งรายงานด่วนก่อนเที่ยง ขอบคุณ","expected_status":"insufficient_evidence","expected_risk":null,"expected_signals":[],"category":"benign_urgency"},
+  {"id":"EN-URGENT-WORK","kind":"text","content":"Please send the project report urgently before noon.","expected_status":"insufficient_evidence","expected_risk":null,"expected_signals":[],"category":"benign_urgency"},
+  {"id":"TH-BANK-LINK","kind":"text","content":"บัญชีธนาคารของคุณจะถูกอายัดภายในวันนี้ คลิก https://bank-check.example.invalid/verify เพื่อยืนยันข้อมูล","expected_risk":"HIGH","expected_signals":["account_threat","link_with_account_action"],"category":"fake_bank_phishing"},
+  {"id":"EN-GOV-REFUND","kind":"text","content":"Government refund pending. Enter your bank password at https://refund-office.example.invalid/claim to receive it.","expected_risk":"HIGH","expected_signals":["requests_secret","link_with_account_action"],"category":"fake_government"},
+  {"id":"TH-TRANSFER","kind":"text","content":"บัญชีของคุณเกี่ยวข้องกับคดี กรุณาโอนเงินทั้งหมดไปบัญชีตรวจสอบทันที","expected_risk":"HIGH","expected_signals":["fear_or_urgency","requests_transfer"],"category":"transfer_pressure"},
+  {"id":"EN-TRANSFER","kind":"text","content":"Your account is at risk. Move your funds to this secure account immediately.","expected_risk":"HIGH","expected_signals":["account_threat","requests_transfer"],"category":"transfer_pressure"},
+  {"id":"TH-PERSONAL-DATA","kind":"text","content":"กรุณาส่งเลขบัตรประชาชนและวันเกิดเพื่อรับเงินคืน","expected_risk":"MEDIUM","expected_signals":["requests_personal_data"],"category":"personal_data_request"},
+  {"id":"EN-BENIGN-LINK","kind":"text","content":"Meeting agenda: https://example.org/agenda","expected_status":"insufficient_evidence","expected_risk":null,"expected_signals":[],"category":"benign_link"},
+  {"id":"TH-VERIFY-OFFICIAL","kind":"text","content":"หากสงสัย กรุณาติดต่อธนาคารผ่านหมายเลขที่อยู่หลังบัตรของคุณ","expected_status":"insufficient_evidence","expected_risk":null,"expected_signals":[],"category":"benign_bank_mention"},
+  {"id":"TH-BANK-SEMINAR","kind":"text","content":"ธนาคารจัดอบรมการใช้บัญชี กรุณาคลิก https://example.org/agenda เพื่อดูตารางงาน","expected_status":"insufficient_evidence","expected_risk":null,"expected_signals":[],"category":"benign_bank_link"},
+  {"id":"TH-SAFETY-ADVICE","kind":"text","content":"บัญชีคุณอาจเสี่ยง อย่ากดลิงก์ https://help.example.org ตรวจสอบกับธนาคารโดยตรง","expected_risk":"MEDIUM","expected_signals":["account_threat"],"category":"benign_safety_advice"},
+  {"id":"TH-ORDINARY-TRANSFER","kind":"text","content":"โอนเงินค่าอาหารให้เพื่อนตอนเย็น","expected_risk":"LOW","expected_signals":["requests_transfer"],"category":"benign_transfer"},
+  {"id":"TH-SUBTLE","kind":"text","content":"หากสะดวก รบกวนยืนยันรายละเอียดบัญชีในแบบฟอร์มนี้เพื่อให้การคืนเงินดำเนินต่อได้","expected_risk":"MEDIUM","expected_signals":["requests_personal_data"],"category":"subtle_scam"},
+  {"id":"URL-IP-LOGIN","kind":"url","content":"http://192.0.2.10/login","expected_risk":"MEDIUM","expected_signals":["url_ip_host"],"category":"suspicious_url"}
+]
+
