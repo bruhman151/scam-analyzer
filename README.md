@@ -2,6 +2,10 @@
 
 **Explainable Thai/English risk triage for messages, URLs and screenshots.** A local portfolio MVP that shows *why* a message deserves review. The score is a heuristic sum of signals, not a probability or a verdict.
 
+![Local demo: OTP request](docs/demo.jpg)
+
+The [image-analysis screenshot](docs/demo-image.jpg) shows the OCR text beside its risk signals.
+
 ## Try it
 
 Windows 10/11 with Python 3.12+:
